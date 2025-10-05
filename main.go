@@ -1,3 +1,8 @@
+func healthHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(`{"status":"ok"}`))
+}
 package main
 
 import (
@@ -32,7 +37,16 @@ func binHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(info)
 }
 
+func healthHandler(w http.ResponseWriter, r *http.Request) {
+    w.Header().Set("Content-Type", "application/json")
+    w.WriteHeader(http.StatusOK)
+    w.Write([]byte(`{"status":"ok"}`))
+}
+
 func main() {
 	http.HandleFunc("/bin-day", binHandler)
+	http.HandleFunc("/health", healthHandler)
 	_ = http.ListenAndServe(":8080", nil)
+	// Log startup message for ArgoCD and general health checks
+	println("[INFO] bin-day service started on :8080")
 }
