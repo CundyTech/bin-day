@@ -5,7 +5,7 @@ COPY . .
 RUN go build -o bin-day main.go
 
 # Run stage
-FROM gcr.io/distroless/base-debian11
+FROM ubuntu:22.04
 WORKDIR /app
 COPY --from=builder /app/bin-day .
 EXPOSE 8080
