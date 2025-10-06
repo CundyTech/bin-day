@@ -27,12 +27,14 @@ func getBinInfo() BinInfo {
 }
 
 func binHandler(w http.ResponseWriter, r *http.Request) {
+	println("[INFO] received get bin info request")
 	info := getBinInfo()
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(info)
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
+	println("[INFO] received health check request")
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(`{"status":"ok"}`))
@@ -41,7 +43,6 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/bin-day", binHandler)
 	http.HandleFunc("/health", healthHandler)
-	_ = http.ListenAndServe(":8080", nil)
-	// Log startup message for ArgoCD and general health checks
 	println("[INFO] bin-day service started on :8080")
+	_ = http.ListenAndServe(":8080", nil)
 }
